@@ -6,13 +6,15 @@ import { ThemeProvider } from '@/providers/theme-provider'
 const host_grotesk = Host_Grotesk({
   subsets: ['latin'],
   weight: ['600'],
-  variable: '--display-family',
+  variable: '--font-sans',
 })
+
 const work_sans = Work_Sans({
   subsets: ['latin'],
   weight: ['400'],
-  variable: '--body-family',
+  variable: '--font-serif',
 })
+
 const jetbrains_mono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400'],
@@ -35,7 +37,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${host_grotesk.variable} ${work_sans.variable} ${jetbrains_mono.variable}`}
     >
-      <body className='font-body antialiased'>
+      <body className='font-sans antialiased'>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'

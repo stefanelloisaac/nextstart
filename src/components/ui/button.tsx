@@ -3,6 +3,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
 
 const buttonVariants = cva(
   "cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -39,14 +40,16 @@ function Button({
   variant = 'default',
   size = 'default',
   asChild = false,
+  tooltip,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
+    tooltip?: string
   }) {
   const Comp = asChild ? Slot : 'button'
 
-  return (
+  const button = (
     <Comp
       data-slot='button'
       data-variant={variant}
@@ -55,6 +58,17 @@ function Button({
       {...props}
     />
   )
+
+  if (tooltip) {
+    return (
+      <Tooltip>
+        <TooltipTrigger asChild>{button}</TooltipTrigger>
+        <TooltipContent side='bottom'>{tooltip}</TooltipContent>
+      </Tooltip>
+    )
+  }
+
+  return button
 }
 
 export { Button, buttonVariants }
